@@ -1,0 +1,9 @@
+.modal-body>textarea{
+    width: 568px;
+    height: 150px;
+}
+.modal-title {
+    margin: 0px;
+    line-height: 1.42857143;
+    text-align: center;
+}

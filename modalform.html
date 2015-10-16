@@ -1,0 +1,85 @@
+<html>
+<head>
+
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/jquery.js"></script>
+    <script type="text/javascript" src="js/bootstrap.js"></script>
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type"/>
+
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $("#sendotchet").click(function(){
+                $("#otchet").submit();
+            });
+            $("#otchet").submit(function() {
+                var form = $(this);
+                $('#report_url_page').val(document.location.href);
+                var data  = form.serialize();
+                $.ajax({
+                    type: "POST",
+                    url: "/feedback.php",
+
+                    data:data,
+                    success: function(msg){
+                        alert( msg );
+                        $('#otchet').trigger('reset');
+                    }
+                });
+                return false;
+            });
+            $(".photogal").jCarouselLite({
+                btnNext: ".next1",
+                btnPrev: ".prev1",
+                visible: 1,
+                vertical: false
+            });
+            $('.item').eq(0).addClass("active");
+
+            /* Search */
+            $('#search_bottom').submit(function () {
+                var filter_name = $('input[name="search_bot"]').val();
+                $(this).attr('action','/search/'+filter_name);
+            });
+            $('#search_bottom button').bind('click', function(){
+                $('#search_bottom').submit(function () {
+                    var filter_name = $('form input[name="search_bot"]').val();
+                    $(this).attr('action','/search/'+filter_name);
+                });
+            });
+        });
+    </script>
+
+</head>
+<body>
+
+<div class="error">
+    <a href="#" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">сообщить об ошибке</a>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+
+            <form id="otchet" action="/" method="get">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Отчёт об ошибке</h4>
+                </div>
+                <div class="modal-body obltext">
+                    <textarea name="report_error"></textarea>
+                    <input name="hid_report" id="report_url_page" type="hidden">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+                    <button id="sendotchet" type="button" class="btn btn-primary">Отправить</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
